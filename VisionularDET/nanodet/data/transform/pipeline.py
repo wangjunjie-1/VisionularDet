@@ -41,10 +41,11 @@ class Pipeline:
 
     def __call__(self, dataset: Dataset, meta: Dict, dst_shape: Tuple[int, int]):
         if self.lowpass_cascade:
-            # print(meta['img'].shape)
+
             meta['img'] =cv2.GaussianBlur(meta['img'], (3, 3), 1, 1)
-            # cv2.imwrite("tmp.png",meta['img'])
-        
+            
+        cv2.imwrite("ori.png",meta['img'])
         meta = self.shape_transform(meta, dst_shape=dst_shape)
+        cv2.imwrite("reshape.png",meta['img'])
         meta = self.color(meta=meta)
         return meta
